@@ -1,0 +1,68 @@
+<!DOCTYPE html>
+<html lang="zh-Hant">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>智能合約 - 區塊鏈學習平台</title>
+  <link rel="stylesheet" href="style.css">
+</head>
+<body>
+  <header class="navbar">
+    <div class="logo">區塊鏈學習平台</div>
+    <nav>
+      <ul>
+        <li><a href="index.html">首頁</a></li>
+        <li><a href="lessons.html" >課程</a></li>
+        <li><a href="simulate.html"class="active">模擬器</a></li>
+        <li><a href="project.html">專案</a></li>
+      </ul>
+    </nav>
+  </header>
+
+  <section class="hero">
+    <h1>智能合約</h1>
+    <p>學習 Solidity 基礎語法並了解智能合約的運作方式。</p>
+  </section>
+
+  <main style="max-width:1000px; margin:auto; padding:40px;">
+    <section>
+      <h2>課程內容</h2>
+      <p>智能合約是部署在區塊鏈上的程式碼，可以自動執行合約條件。Solidity 是最常用於撰寫以太坊智能合約的程式語言。</p>
+    </section>
+
+    <section>
+      <h2>互動練習</h2>
+      <p>點擊按鈕載入 HelloWorld 智能合約範例，並前往模擬器進行編輯。</p>
+      <div id="contract-simulation">
+        <button id="load-contract">載入範例合約</button>
+        <p id="contract-status">尚未載入範例</p>
+      </div>
+    </section>
+
+    <section>
+      <h2>完成課程</h2>
+      <button id="complete-btn">標記為已完成</button>
+    </section>
+  </main>
+
+  <footer>
+    <p>© 2025 區塊鏈學習平台 | 由 徐文志 製作</p>
+  </footer>
+
+  <script>
+    document.getElementById("load-contract").addEventListener("click", ()=>{
+      const code = `pragma solidity ^0.8.0;\n\ncontract HelloWorld {\n    string public message = "Hello, Blockchain!";\n    function setMessage(string memory newMessage) public {\n        message = newMessage;\n    }\n}`;
+      localStorage.setItem("project_code", code);
+      document.getElementById("contract-status").textContent = "已載入 HelloWorld 範例合約，請至模擬器頁面查看。";
+    });
+
+    document.getElementById("complete-btn").addEventListener("click", ()=>{
+      let user = localStorage.getItem("block_user") || "訪客";
+      let progress = JSON.parse(localStorage.getItem("block_progress") || "{}");
+      progress["lesson-contract"] = true;
+      localStorage.setItem("block_progress", JSON.stringify(progress));
+      alert(user + "，已完成課程：智能合約！");
+    });
+  </script>
+</body>
+</html>

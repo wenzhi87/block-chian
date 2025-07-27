@@ -1,0 +1,72 @@
+<!DOCTYPE html>
+<html lang="zh-Hant">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>NFT 與代幣化 - 區塊鏈學習平台</title>
+  <link rel="stylesheet" href="style.css">
+</head>
+<body>
+  <header class="navbar">
+    <div class="logo">區塊鏈學習平台</div>
+    <nav>
+      <ul>
+        <li><a href="index.html">首頁</a></li>
+        <li><a href="lessons.html" >課程</a></li>
+        <li><a href="simulate.html"class="active">模擬器</a></li>
+        <li><a href="project.html">專案</a></li>
+      </ul>
+    </nav>
+  </header>
+
+  <section class="hero">
+    <h1>NFT 與代幣化</h1>
+    <p>了解非同質化代幣的概念與資產上鏈的應用。</p>
+  </section>
+
+  <main style="max-width:1000px; margin:auto; padding:40px;">
+    <section>
+      <h2>課程內容</h2>
+      <p>NFT 代表獨特且不可互換的數位資產，可應用於藝術、遊戲道具、虛擬土地等領域。透過智能合約，現實資產也能代幣化並在鏈上交易。</p>
+    </section>
+
+    <section>
+      <h2>互動練習</h2>
+      <p>輸入 NFT 名稱並模擬鑄造一個 NFT。</p>
+      <div id="nft-simulation">
+        <input type="text" id="nft-name" placeholder="輸入 NFT 名稱">
+        <button id="mint-btn">模擬鑄造</button>
+        <p id="mint-result">尚未鑄造 NFT</p>
+      </div>
+    </section>
+
+    <section>
+      <h2>完成課程</h2>
+      <button id="complete-btn">標記為已完成</button>
+    </section>
+  </main>
+
+  <footer>
+    <p>© 2025 區塊鏈學習平台 | 由 徐文志 製作</p>
+  </footer>
+
+  <script>
+    document.getElementById("mint-btn").addEventListener("click", ()=>{
+      const nftName = document.getElementById("nft-name").value.trim();
+      if(nftName){
+        document.getElementById("mint-result").textContent = `已模擬鑄造 NFT：${nftName}`;
+      } else {
+        document.getElementById("mint-result").textContent = "請輸入有效的 NFT 名稱！";
+      }
+    });
+
+    document.getElementById("complete-btn").addEventListener("click", ()=>{
+      let user = localStorage.getItem("block_user") || "訪客";
+      let progress = JSON.parse(localStorage.getItem("block_progress") || "{}");
+      progress["lesson-nft"] = true;
+      localStorage.setItem("block_progress", JSON.stringify(progress));
+      alert(user + "，已完成課程：NFT 與代幣化！");
+    });
+  </script>
+</body>
+</html>

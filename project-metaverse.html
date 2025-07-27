@@ -1,0 +1,168 @@
+<!DOCTYPE html>
+<html lang="zh-Hant">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>元宇宙專案 - 區塊鏈學習平台</title>
+  <link rel="stylesheet" href="style.css">
+  <script src="https://cdn.jsdelivr.net/npm/three@0.152.2/build/three.min.js"></script>
+  <script src="https://cdn.jsdelivr.net/npm/three@0.152.2/examples/js/controls/OrbitControls.js"></script>
+  <script src="https://cdn.jsdelivr.net/npm/three@0.152.2/examples/js/loaders/GLTFLoader.js"></script>
+</head>
+<body>
+  <header class="navbar">
+    <div class="logo">區塊鏈學習平台</div>
+    <nav>
+      <ul>
+        <li><a href="index.html">首頁</a></li>
+        <li><a href="lessons.html">課程</a></li>
+        <li><a href="simulate.html">模擬器</a></li>
+        <li><a href="project.html" class="active">專案</a></li>
+      </ul>
+    </nav>
+  </header>
+
+  <section class="hero">
+    <h1>元宇宙專案</h1>
+    <p>探索並建立你的 3D 虛擬世界，支援方向鍵移動與載入 Sketchfab 模型。</p>
+  </section>
+
+  <main style="margin:auto; padding:20px; text-align:center;">
+    <canvas id="metaverse"></canvas>
+    <div style="margin-top:15px;">
+      <button id="btnCube">新增立方體</button>
+      <button id="btnSphere">新增球體</button>
+      <input type="text" id="modelUrl" placeholder="輸入 Sketchfab glTF 模型 URL" style="width:300px;">
+      <button id="btnLoad">載入模型</button>
+      <button id="btnReset">重設視角</button>
+    </div>
+
+    <h2 style="margin-top:30px;">Sketchfab 模型範例</h2>
+    <div id="sampleContainer" style="display:flex; flex-wrap:wrap; justify-content:center; gap:20px; margin-top:15px;"></div>
+  </main>
+
+  <footer>
+    <p>© 2025 區塊鏈學習平台 | 由 徐文志 製作</p>
+  </footer>
+
+  <script>
+    // 初始化 Three.js 場景
+    const scene = new THREE.Scene();
+    const camera = new THREE.PerspectiveCamera(75, window.innerWidth / window.innerHeight, 0.1, 1000);
+    const renderer = new THREE.WebGLRenderer({ canvas: document.getElementById("metaverse"), antialias: true });
+    renderer.setSize(window.innerWidth, window.innerHeight * 0.7);
+
+    // 燈光
+    const light = new THREE.DirectionalLight(0xffffff, 1);
+    light.position.set(5, 10, 7.5);
+    scene.add(light);
+
+    // 地板
+    const planeGeo = new THREE.PlaneGeometry(50, 50);
+    const planeMat = new THREE.MeshStandardMaterial({ color: 0x444444 });
+    const plane = new THREE.Mesh(planeGeo, planeMat);
+    plane.rotation.x = -Math.PI / 2;
+    scene.add(plane);
+
+    camera.position.set(0, 2, 5);
+    const controls = new THREE.OrbitControls(camera, renderer.domElement);
+
+    // 鍵盤控制
+    const keys = {};
+    document.addEventListener("keydown", e => keys[e.key] = true);
+    document.addEventListener("keyup", e => keys[e.key] = false);
+
+    // 功能函式
+    function addCube() {
+      const geometry = new THREE.BoxGeometry(1, 1, 1);
+      const material = new THREE.MeshStandardMaterial({ color: Math.random() * 0xffffff });
+      const cube = new THREE.Mesh(geometry, material);
+      cube.position.set(Math.random() * 4 - 2, 0.5, Math.random() * 4 - 2);
+      scene.add(cube);
+    }
+
+    function addSphere() {
+      const geometry = new THREE.SphereGeometry(0.5, 32, 32);
+      const material = new THREE.MeshStandardMaterial({ color: Math.random() * 0xffffff });
+      const sphere = new THREE.Mesh(geometry, material);
+      sphere.position.set(Math.random() * 4 - 2, 0.5, Math.random() * 4 - 2);
+      scene.add(sphere);
+    }
+
+    function loadModel() {
+      const url = document.getElementById("modelUrl").value.trim();
+      if (!url) {
+        alert("請輸入模型 URL");
+        return;
+      }
+      const loader = new THREE.GLTFLoader();
+      loader.load(url, gltf => {
+        gltf.scene.position.set(0, 0, 0);
+        scene.add(gltf.scene);
+      }, undefined, err => {
+        console.error("載入模型失敗", err);
+        alert("載入模型失敗，請確認 URL 是否正確");
+      });
+    }
+
+    function resetCamera() {
+      camera.position.set(0, 2, 5);
+      controls.update();
+    }
+
+    // 綁定按鈕事件
+    document.getElementById("btnCube").addEventListener("click", addCube);
+    document.getElementById("btnSphere").addEventListener("click", addSphere);
+    document.getElementById("btnLoad").addEventListener("click", loadModel);
+    document.getElementById("btnReset").addEventListener("click", resetCamera);
+
+    // 建立範例模型卡片
+    const samples = [
+      { name: "模型範例 1", url: "https://example.com/model1.glb" },
+      { name: "模型範例 2", url: "https://example.com/model2.glb" },
+      { name: "模型範例 3", url: "https://example.com/model3.glb" }
+    ];
+
+    const container = document.getElementById("sampleContainer");
+    samples.forEach(sample => {
+      const card = document.createElement("div");
+      card.style.width = "200px";
+      card.style.textAlign = "center";
+
+      const img = document.createElement("img");
+      img.src = "https://static.sketchfab.com/img/press/logos/sketchfab-logo.png";
+      img.style.width = "100%";
+      img.style.borderRadius = "8px";
+
+      const p = document.createElement("p");
+      p.textContent = sample.name;
+
+      const btn = document.createElement("button");
+      btn.textContent = "使用此模型";
+      btn.addEventListener("click", () => {
+        document.getElementById("modelUrl").value = sample.url;
+        loadModel();
+      });
+
+      card.appendChild(img);
+      card.appendChild(p);
+      card.appendChild(btn);
+      container.appendChild(card);
+    });
+
+    // 動畫更新
+    function animate() {
+      requestAnimationFrame(animate);
+      if (keys['ArrowUp']) camera.position.z -= 0.1;
+      if (keys['ArrowDown']) camera.position.z += 0.1;
+      if (keys['ArrowLeft']) camera.position.x -= 0.1;
+      if (keys['ArrowRight']) camera.position.x += 0.1;
+      if (keys['q']) camera.position.y -= 0.1;
+      if (keys['e']) camera.position.y += 0.1;
+      renderer.render(scene, camera);
+    }
+
+    animate();
+  </script>
+</body>
+</html>

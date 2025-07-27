@@ -1,0 +1,102 @@
+<!DOCTYPE html>
+<html lang="zh-Hant">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>課程介紹 - 區塊鏈學習平台</title>
+  <link rel="stylesheet" href="style.css">
+  <style>
+    .container {
+      display: flex;
+      max-width: flex;
+      margin: auto;
+      padding: 20px;
+    }
+    .sidebar {
+      width: 250px;
+      background: #111;
+      padding: 20px;
+      border-radius: 8px;
+    }
+    .sidebar ul {
+      list-style: none;
+      padding: 0;
+    }
+    .sidebar li {
+      padding: 10px;
+      cursor: pointer;
+      color: #0ff;
+    }
+    .sidebar li:hover {
+      background: #222;
+    }
+    .content {
+      flex: 1;
+      margin-left: 20px;
+      background: #1a1a1a;
+      padding: 20px;
+      border-radius: 8px;
+      color: #fff;
+    }
+    .content-section { display: none; }
+    .content-section.active { display: block; }
+  </style>
+</head>
+<body>
+  <header class="navbar">
+    <div class="logo">區塊鏈學習平台</div>
+    <nav>
+      <ul>
+        <li><a href="index.html">首頁</a></li>
+        <li><a href="lessons.html" class="active">課程</a></li>
+        <li><a href="simulate.html">模擬器</a></li>
+        <li><a href="project.html">專案</a></li>
+      </ul>
+    </nav>
+  </header>
+
+  <section class="hero">
+    <h1>課程內容</h1>
+    <p>從左側選單選擇技術，右側會顯示對應的介紹內容。</p>
+  </section>
+
+  <div class="container">
+    <div class="sidebar">
+      <ul>
+        <li onclick="showContent('node')">節點與共識機制</li>
+        <li onclick="showContent('crypto')">加密貨幣基礎</li>
+        <li onclick="showContent('nft')">NFT 與代幣化</li>
+        <li onclick="showContent('dapp')">DApp 開發</li>
+        <li onclick="showContent('contract')">智能合約</li>
+        <li onclick="showContent('defi')">去中心化金融 (DeFi)</li>
+        <li onclick="showContent('dao')">DAO 治理</li>
+        <li onclick="showContent('zkp')">零知識證明 (ZKP)</li>
+        <li onclick="showContent('bridge')">跨鏈橋</li>
+      </ul>
+    </div>
+
+    <div class="content">
+      <div id="node" class="content-section active"><h2>節點與共識機制</h2><p>了解節點類型、區塊傳遞及共識演算法。</p></div>
+      <div id="crypto" class="content-section"><h2>加密貨幣基礎</h2><p>學習錢包、交易與公私鑰基礎知識。</p></div>
+      <div id="nft" class="content-section"><h2>NFT 與代幣化</h2><p>探索 NFT 與資產代幣化的應用。</p></div>
+      <div id="dapp" class="content-section"><h2>DApp 開發</h2><p>學習去中心化應用程式的運作與前端互動。</p></div>
+      <div id="contract" class="content-section"><h2>智能合約</h2><p>了解 Solidity 基礎並進行程式碼練習。</p></div>
+      <div id="defi" class="content-section"><h2>去中心化金融 (DeFi)</h2><p>了解流動性池、借貸與自動做市商。</p></div>
+      <div id="dao" class="content-section"><h2>DAO 治理</h2><p>學習去中心化組織的治理機制。</p></div>
+      <div id="zkp" class="content-section"><h2>零知識證明 (ZKP)</h2><p>掌握 ZKP 的概念與應用場景。</p></div>
+      <div id="bridge" class="content-section"><h2>跨鏈橋</h2><p>了解鏈間資產轉移的實作方法。</p></div>
+    </div>
+  </div>
+
+  <footer>
+    <p>© 2025 區塊鏈學習平台 | 由 徐文志 製作</p>
+  </footer>
+
+  <script>
+    function showContent(id) {
+      document.querySelectorAll('.content-section').forEach(sec => sec.classList.remove('active'));
+      document.getElementById(id).classList.add('active');
+    }
+  </script>
+</body>
+</html>

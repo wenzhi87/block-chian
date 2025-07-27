@@ -1,0 +1,73 @@
+<!DOCTYPE html>
+<html lang="zh-Hant">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>DAO 治理 - 區塊鏈學習平台</title>
+  <link rel="stylesheet" href="style.css">
+</head>
+<body>
+  <header class="navbar">
+    <div class="logo">區塊鏈學習平台</div>
+    <nav>
+      <ul>
+        <li><a href="index.html">首頁</a></li>
+        <li><a href="lessons.html" >課程</a></li>
+        <li><a href="simulate.html"class="active">模擬器</a></li>
+        <li><a href="project.html">專案</a></li>
+
+      </ul>
+    </nav>
+  </header>
+
+  <section class="hero">
+    <h1>DAO 治理</h1>
+    <p>學習去中心化自治組織 (DAO) 的投票與決策機制。</p>
+  </section>
+
+  <main style="max-width:1000px; margin:auto; padding:40px;">
+    <section>
+      <h2>課程內容</h2>
+      <p>DAO 是透過智能合約運行的組織，成員可透過治理代幣對提案進行投票，並由鏈上合約自動執行決策。</p>
+    </section>
+
+    <section>
+      <h2>互動練習</h2>
+      <p>選擇一個提案並進行投票。</p>
+      <div id="dao-simulation">
+        <select id="proposal">
+          <option value="增加資金池">增加資金池</option>
+          <option value="新增功能開發">新增功能開發</option>
+          <option value="社群行銷活動">社群行銷活動</option>
+        </select>
+        <button id="vote-btn">投票</button>
+        <p id="vote-result">尚未投票</p>
+      </div>
+    </section>
+
+    <section>
+      <h2>完成課程</h2>
+      <button id="complete-btn">標記為已完成</button>
+    </section>
+  </main>
+
+  <footer>
+    <p>© 2025 區塊鏈學習平台 | 由 徐文志 製作</p>
+  </footer>
+
+  <script>
+    document.getElementById("vote-btn").addEventListener("click", ()=>{
+      const selected = document.getElementById("proposal").value;
+      document.getElementById("vote-result").textContent = `已對提案「${selected}」進行投票！`;
+    });
+
+    document.getElementById("complete-btn").addEventListener("click", ()=>{
+      let user = localStorage.getItem("block_user") || "訪客";
+      let progress = JSON.parse(localStorage.getItem("block_progress") || "{}");
+      progress["lesson-dao"] = true;
+      localStorage.setItem("block_progress", JSON.stringify(progress));
+      alert(user + "，已完成課程：DAO 治理！");
+    });
+  </script>
+</body>
+</html>

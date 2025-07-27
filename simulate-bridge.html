@@ -1,0 +1,78 @@
+<!DOCTYPE html>
+<html lang="zh-Hant">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>跨鏈橋 - 區塊鏈學習平台</title>
+  <link rel="stylesheet" href="style.css">
+</head>
+<body>
+  <header class="navbar">
+    <div class="logo">區塊鏈學習平台</div>
+    <nav>
+      <ul>
+        <li><a href="index.html">首頁</a></li>
+        <li><a href="lessons.html" >課程</a></li>
+        <li><a href="simulate.html"class="active">模擬器</a></li>
+        <li><a href="project.html">專案</a></li>
+      </ul>
+    </nav>
+  </header>
+
+  <section class="hero">
+    <h1>跨鏈橋</h1>
+    <p>了解如何在不同區塊鏈之間傳輸資產，提升互操作性。</p>
+  </section>
+
+  <main style="max-width:1000px; margin:auto; padding:40px;">
+    <section>
+      <h2>課程內容</h2>
+      <p>跨鏈橋允許使用者將資產從一條鏈鎖定並在另一條鏈鑄造相應資產，以實現多鏈資產互通。</p>
+    </section>
+
+    <section>
+      <h2>互動練習</h2>
+      <p>選擇目標鏈並輸入轉移的代幣數量。</p>
+      <div id="bridge-simulation">
+        <select id="target-chain">
+          <option value="Ethereum">Ethereum</option>
+          <option value="Polygon">Polygon</option>
+          <option value="BSC">BSC</option>
+        </select>
+        <input type="number" id="bridge-amount" placeholder="輸入數量">
+        <button id="bridge-btn">模擬轉移</button>
+        <p id="bridge-result">尚未進行轉移</p>
+      </div>
+    </section>
+
+    <section>
+      <h2>完成課程</h2>
+      <button id="complete-btn">標記為已完成</button>
+    </section>
+  </main>
+
+  <footer>
+    <p>© 2025 區塊鏈學習平台 | 由 徐文志 製作</p>
+  </footer>
+
+  <script>
+    document.getElementById("bridge-btn").addEventListener("click", ()=>{
+      const chain = document.getElementById("target-chain").value;
+      const amount = document.getElementById("bridge-amount").value;
+      if(amount && amount>0){
+        document.getElementById("bridge-result").textContent = `已模擬將 ${amount} 個代幣轉移至 ${chain}！`;
+      } else {
+        document.getElementById("bridge-result").textContent = "請輸入有效的數量！";
+      }
+    });
+
+    document.getElementById("complete-btn").addEventListener("click", ()=>{
+      let user = localStorage.getItem("block_user") || "訪客";
+      let progress = JSON.parse(localStorage.getItem("block_progress") || "{}");
+      progress["lesson-bridge"] = true;
+      localStorage.setItem("block_progress", JSON.stringify(progress));
+      alert(user + "，已完成課程：跨鏈橋！");
+    });
+  </script>
+</body>
+</html>

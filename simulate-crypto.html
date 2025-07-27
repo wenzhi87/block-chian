@@ -1,0 +1,72 @@
+<!DOCTYPE html>
+<html lang="zh-Hant">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>加密貨幣基礎 - 區塊鏈學習平台</title>
+  <link rel="stylesheet" href="style.css">
+</head>
+<body>
+  <header class="navbar">
+    <div class="logo">區塊鏈學習平台</div>
+    <nav>
+      <ul>
+        <li><a href="index.html">首頁</a></li>
+        <li><a href="lessons.html" >課程</a></li>
+        <li><a href="simulate.html"class="active">模擬器</a></li>
+        <li><a href="project.html">專案</a></li>
+      </ul>
+    </nav>
+  </header>
+
+  <section class="hero">
+    <h1>加密貨幣基礎</h1>
+    <p>學習錢包、公私鑰與交易在區塊鏈中的運作方式。</p>
+  </section>
+
+  <main style="max-width:1000px; margin:auto; padding:40px;">
+    <section>
+      <h2>課程內容</h2>
+      <p>加密貨幣使用公鑰與私鑰進行交易簽名，並透過區塊鏈網路進行交易驗證與記錄。錢包可儲存私鑰並提供使用者管理資產。</p>
+    </section>
+
+    <section>
+      <h2>互動練習</h2>
+      <p>輸入轉帳金額並模擬一次交易。</p>
+      <div id="crypto-simulation">
+        <input type="number" id="amount" placeholder="輸入金額"> 
+        <button id="send-btn">模擬轉帳</button>
+        <p id="tx-result">尚未進行交易</p>
+      </div>
+    </section>
+
+    <section>
+      <h2>完成課程</h2>
+      <button id="complete-btn">標記為已完成</button>
+    </section>
+  </main>
+
+  <footer>
+    <p>© 2025 區塊鏈學習平台 | 由 徐文志 製作</p>
+  </footer>
+
+  <script>
+    document.getElementById("send-btn").addEventListener("click", ()=>{
+      const amount = document.getElementById("amount").value;
+      if(amount && amount>0){
+        document.getElementById("tx-result").textContent = `已模擬發送 ${amount} 個代幣，交易完成！`;
+      } else {
+        document.getElementById("tx-result").textContent = "請輸入有效的金額！";
+      }
+    });
+
+    document.getElementById("complete-btn").addEventListener("click", ()=>{
+      let user = localStorage.getItem("block_user") || "訪客";
+      let progress = JSON.parse(localStorage.getItem("block_progress") || "{}");
+      progress["lesson-crypto"] = true;
+      localStorage.setItem("block_progress", JSON.stringify(progress));
+      alert(user + "，已完成課程：加密貨幣基礎！");
+    });
+  </script>
+</body>
+</html>

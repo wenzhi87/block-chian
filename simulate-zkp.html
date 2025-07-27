@@ -1,0 +1,81 @@
+<!DOCTYPE html>
+<html lang="zh-Hant">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>零知識證明 (ZKP) - 區塊鏈學習平台</title>
+  <link rel="stylesheet" href="style.css">
+</head>
+<body>
+  <header class="navbar">
+    <div class="logo">區塊鏈學習平台</div>
+    <nav>
+      <ul>
+        <li><a href="index.html">首頁</a></li>
+        <li><a href="lessons.html" class="active">課程</a></li>
+        <li><a href="simulate.html">模擬器</a></li>
+        <li><a href="project.html">專案</a></li>
+      </ul>
+    </nav>
+  </header>
+
+  <section class="hero">
+    <h1>零知識證明 (ZKP)</h1>
+    <p>學習如何在不洩漏資訊內容的情況下驗證訊息真實性。</p>
+  </section>
+
+  <main style="max-width:1000px; margin:auto; padding:40px;">
+    <section>
+      <h2>課程內容</h2>
+      <p>零知識證明允許一方在不透露實際資料的前提下，向另一方證明其擁有某項資訊，常用於隱私保護與安全驗證。</p>
+    </section>
+
+    <section>
+      <h2>互動練習</h2>
+      <p>輸入一個秘密並產生其雜湊值，展示如何驗證而不公開秘密。</p>
+      <div id="zkp-simulation">
+        <input type="text" id="secret" placeholder="輸入秘密">
+        <button id="hash-btn">產生雜湊</button>
+        <p id="hash-result">尚未產生雜湊</p>
+      </div>
+    </section>
+
+    <section>
+      <h2>完成課程</h2>
+      <button id="complete-btn">標記為已完成</button>
+    </section>
+  </main>
+
+  <footer>
+    <p>© 2025 區塊鏈學習平台 | 由 徐文志 製作</p>
+  </footer>
+
+  <script>
+    function simpleHash(str){
+      let hash = 0;
+      for (let i = 0; i < str.length; i++) {
+        hash = (hash << 5) - hash + str.charCodeAt(i);
+        hash |= 0;
+      }
+      return Math.abs(hash).toString(16);
+    }
+
+    document.getElementById("hash-btn").addEventListener("click", ()=>{
+      const secret = document.getElementById("secret").value.trim();
+      if(secret){
+        document.getElementById("hash-result").textContent = `雜湊值：${simpleHash(secret)}`;
+      } else {
+        document.getElementById("hash-result").textContent = "請輸入有效的秘密！";
+      }
+    });
+
+    document.getElementById("complete-btn").addEventListener("click", ()=>{
+      let user = localStorage.getItem("block_user") || "訪客";
+      let progress = JSON.parse(localStorage.getItem("block_progress") || "{}");
+      progress["lesson-zkp"] = true;
+      localStorage.setItem("block_progress", JSON.stringify(progress));
+      alert(user + "，已完成課程：零知識證明 (ZKP)！");
+    });
+  </script>
+</body>
+</html>

@@ -1,0 +1,75 @@
+<!DOCTYPE html>
+<html lang="zh-Hant">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>去中心化金融 (DeFi) - 區塊鏈學習平台</title>
+  <link rel="stylesheet" href="style.css">
+</head>
+<body>
+  <header class="navbar">
+    <div class="logo">區塊鏈學習平台</div>
+    <nav>
+      <ul>
+         <li><a href="index.html">首頁</a></li>
+        <li><a href="lessons.html" >課程</a></li>
+        <li><a href="simulate.html"class="active">模擬器</a></li>
+        <li><a href="project.html">專案</a></li>
+      </ul>
+    </nav>
+  </header>
+
+  <section class="hero">
+    <h1>去中心化金融 (DeFi)</h1>
+    <p>了解流動性池、借貸與自動做市商 (AMM) 的運作原理。</p>
+  </section>
+
+  <main style="max-width:1000px; margin:auto; padding:40px;">
+    <section>
+      <h2>課程內容</h2>
+      <p>DeFi 提供去中心化的金融服務，包括借貸、質押與交易所。透過智能合約，使用者能直接參與流動性提供並獲得收益。</p>
+    </section>
+
+    <section>
+      <h2>互動練習</h2>
+      <p>輸入兩種代幣數量，模擬新增流動性並計算比例。</p>
+      <div id="defi-simulation">
+        <input type="number" id="tokenA" placeholder="代幣A 數量">
+        <input type="number" id="tokenB" placeholder="代幣B 數量">
+        <button id="calc-btn">計算比例</button>
+        <p id="defi-result">尚未計算</p>
+      </div>
+    </section>
+
+    <section>
+      <h2>完成課程</h2>
+      <button id="complete-btn">標記為已完成</button>
+    </section>
+  </main>
+
+  <footer>
+    <p>© 2025 區塊鏈學習平台 | 由 徐文志 製作</p>
+  </footer>
+
+  <script>
+    document.getElementById("calc-btn").addEventListener("click", ()=>{
+      const a = parseFloat(document.getElementById("tokenA").value);
+      const b = parseFloat(document.getElementById("tokenB").value);
+      if(a>0 && b>0){
+        const ratio = (a/b).toFixed(2);
+        document.getElementById("defi-result").textContent = `代幣A:代幣B 的比例為 ${ratio}:1`;
+      } else {
+        document.getElementById("defi-result").textContent = "請輸入有效的代幣數量！";
+      }
+    });
+
+    document.getElementById("complete-btn").addEventListener("click", ()=>{
+      let user = localStorage.getItem("block_user") || "訪客";
+      let progress = JSON.parse(localStorage.getItem("block_progress") || "{}");
+      progress["lesson-defi"] = true;
+      localStorage.setItem("block_progress", JSON.stringify(progress));
+      alert(user + "，已完成課程：去中心化金融 (DeFi)！");
+    });
+  </script>
+</body>
+</html>

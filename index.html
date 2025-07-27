@@ -1,0 +1,58 @@
+<!DOCTYPE html>
+<html lang="zh-Hant">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>區塊鏈學習平台 - 首頁</title>
+  <link rel="stylesheet" href="style.css">
+
+</head>
+<body>
+  <header class="navbar">
+    <div class="logo">區塊鏈學習平台</div>
+    <nav>
+      <ul>
+        <li><a href="index.html" class="active">首頁</a></li>
+        <li><a href="lessons.html">課程</a></li>
+        <li><a href="simulate.html">模擬器</a></li>
+        <li><a href="project.html">專案</a></li>
+      </ul>
+    </nav>
+  </header>
+
+  <section class="hero">
+    <h1>進入區塊鏈的未來世界</h1>
+    <p>探索 DApp、智能合約、NFT、DeFi、DAO、ZKP 等核心知識</p>
+    <button id="start-btn">開始學習</button>
+  </section>
+
+  <section class="overview">
+    <h2>平台特色</h2>
+    <ul>
+      <li>互動式課程與即時練習</li>
+      <li>智能合約線上編輯與模擬部署</li>
+      <li>專案挑戰幫助學以致用</li>
+      <li>進度追蹤與成就系統</li>
+    </ul>
+  </section>
+
+  <section class="cta">
+    <h2>準備好開始你的學習旅程了嗎？</h2>
+    <button id="start-btn-2">立即開始</button>
+  </section>
+
+  <footer>
+    <p>© 2025 區塊鏈學習平台 | 由 徐文志 製作</p>
+  </footer>
+
+  <script>
+    document.getElementById("start-btn").addEventListener("click", function(){
+      window.location.href = "lessons.html";
+    });
+
+    document.getElementById("start-btn-2").addEventListener("click", function(){
+      window.location.href = "simulate.html";
+    });
+  </script>
+</body>
+</html>

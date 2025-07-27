@@ -1,0 +1,76 @@
+<!DOCTYPE html>
+<html lang="zh-Hant">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>節點與共識機制 - 區塊鏈學習平台</title>
+  <link rel="stylesheet" href="style.css">
+</head>
+<body>
+  <header class="navbar">
+    <div class="logo">區塊鏈學習平台</div>
+    <nav>
+      <ul>
+        <li><a href="index.html">首頁</a></li>
+        <li><a href="lessons.html" >課程</a></li>
+        <li><a href="simulate.html"class="active">模擬器</a></li>
+        <li><a href="project.html">專案</a></li>
+      </ul>
+    </nav>
+  </header>
+
+  <section class="hero">
+    <h1>節點與共識機制</h1>
+    <p>了解區塊鏈節點類型、運作方式與共識演算法。</p>
+  </section>
+
+  <main style="max-width:1000px; margin:auto; padding:40px;">
+    <section>
+      <h2>課程內容</h2>
+      <p>在區塊鏈網路中，節點負責儲存、驗證與傳遞交易資料。共識機制則決定了如何由眾多節點共同確認區塊鏈的狀態，例如工作量證明(PoW)與權益證明(PoS)。</p>
+    </section>
+
+    <section>
+      <h2>互動模擬</h2>
+      <p>使用下方按鈕模擬節點啟動與關閉，觀察對網路的影響。</p>
+      <div id="node-simulation">
+        <button id="add-node">啟動新節點</button>
+        <button id="remove-node">關閉一個節點</button>
+        <p>目前節點數：<span id="node-count">0</span></p>
+      </div>
+    </section>
+
+    <section>
+      <h2>完成課程</h2>
+      <button id="complete-btn">標記為已完成</button>
+    </section>
+  </main>
+
+  <footer>
+    <p>© 2025 區塊鏈學習平台 | 由 徐文志 製作</p>
+  </footer>
+
+  <script>
+    let nodeCount = 0;
+    const nodeDisplay = document.getElementById("node-count");
+
+    document.getElementById("add-node").addEventListener("click", ()=>{
+      nodeCount++;
+      nodeDisplay.textContent = nodeCount;
+    });
+
+    document.getElementById("remove-node").addEventListener("click", ()=>{
+      if(nodeCount>0) nodeCount--;
+      nodeDisplay.textContent = nodeCount;
+    });
+
+    document.getElementById("complete-btn").addEventListener("click", ()=>{
+      let user = localStorage.getItem("block_user") || "訪客";
+      let progress = JSON.parse(localStorage.getItem("block_progress") || "{}");
+      progress["lesson-node"] = true;
+      localStorage.setItem("block_progress", JSON.stringify(progress));
+      alert(user + "，已完成課程：節點與共識機制！");
+    });
+  </script>
+</body>
+</html>
