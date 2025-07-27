@@ -46,123 +46,117 @@
   </footer>
 
   <script>
-    // 初始化 Three.js 場景
-    const scene = new THREE.Scene();
-    const camera = new THREE.PerspectiveCamera(75, window.innerWidth / window.innerHeight, 0.1, 1000);
-    const renderer = new THREE.WebGLRenderer({ canvas: document.getElementById("metaverse"), antialias: true });
-    renderer.setSize(window.innerWidth, window.innerHeight * 0.7);
+    window.onload = () => {
+      const scene = new THREE.Scene();
+      const camera = new THREE.PerspectiveCamera(75, window.innerWidth / window.innerHeight, 0.1, 1000);
+      const renderer = new THREE.WebGLRenderer({ canvas: document.getElementById("metaverse"), antialias: true });
+      renderer.setSize(window.innerWidth, window.innerHeight * 0.7);
 
-    // 燈光
-    const light = new THREE.DirectionalLight(0xffffff, 1);
-    light.position.set(5, 10, 7.5);
-    scene.add(light);
+      const light = new THREE.DirectionalLight(0xffffff, 1);
+      light.position.set(5, 10, 7.5);
+      scene.add(light);
 
-    // 地板
-    const planeGeo = new THREE.PlaneGeometry(50, 50);
-    const planeMat = new THREE.MeshStandardMaterial({ color: 0x444444 });
-    const plane = new THREE.Mesh(planeGeo, planeMat);
-    plane.rotation.x = -Math.PI / 2;
-    scene.add(plane);
+      const planeGeo = new THREE.PlaneGeometry(50, 50);
+      const planeMat = new THREE.MeshStandardMaterial({ color: 0x444444 });
+      const plane = new THREE.Mesh(planeGeo, planeMat);
+      plane.rotation.x = -Math.PI / 2;
+      scene.add(plane);
 
-    camera.position.set(0, 2, 5);
-    const controls = new THREE.OrbitControls(camera, renderer.domElement);
-
-    // 鍵盤控制
-    const keys = {};
-    document.addEventListener("keydown", e => keys[e.key] = true);
-    document.addEventListener("keyup", e => keys[e.key] = false);
-
-    // 功能函式
-    function addCube() {
-      const geometry = new THREE.BoxGeometry(1, 1, 1);
-      const material = new THREE.MeshStandardMaterial({ color: Math.random() * 0xffffff });
-      const cube = new THREE.Mesh(geometry, material);
-      cube.position.set(Math.random() * 4 - 2, 0.5, Math.random() * 4 - 2);
-      scene.add(cube);
-    }
-
-    function addSphere() {
-      const geometry = new THREE.SphereGeometry(0.5, 32, 32);
-      const material = new THREE.MeshStandardMaterial({ color: Math.random() * 0xffffff });
-      const sphere = new THREE.Mesh(geometry, material);
-      sphere.position.set(Math.random() * 4 - 2, 0.5, Math.random() * 4 - 2);
-      scene.add(sphere);
-    }
-
-    function loadModel() {
-      const url = document.getElementById("modelUrl").value.trim();
-      if (!url) {
-        alert("請輸入模型 URL");
-        return;
-      }
-      const loader = new THREE.GLTFLoader();
-      loader.load(url, gltf => {
-        gltf.scene.position.set(0, 0, 0);
-        scene.add(gltf.scene);
-      }, undefined, err => {
-        console.error("載入模型失敗", err);
-        alert("載入模型失敗，請確認 URL 是否正確");
-      });
-    }
-
-    function resetCamera() {
       camera.position.set(0, 2, 5);
-      controls.update();
-    }
+      const controls = new THREE.OrbitControls(camera, renderer.domElement);
 
-    // 綁定按鈕事件
-    document.getElementById("btnCube").addEventListener("click", addCube);
-    document.getElementById("btnSphere").addEventListener("click", addSphere);
-    document.getElementById("btnLoad").addEventListener("click", loadModel);
-    document.getElementById("btnReset").addEventListener("click", resetCamera);
+      const keys = {};
+      document.addEventListener("keydown", e => keys[e.key] = true);
+      document.addEventListener("keyup", e => keys[e.key] = false);
 
-    // 建立範例模型卡片
-    const samples = [
-      { name: "模型範例 1", url: "https://example.com/model1.glb" },
-      { name: "模型範例 2", url: "https://example.com/model2.glb" },
-      { name: "模型範例 3", url: "https://example.com/model3.glb" }
-    ];
+      function addCube() {
+        const geometry = new THREE.BoxGeometry(1, 1, 1);
+        const material = new THREE.MeshStandardMaterial({ color: Math.random() * 0xffffff });
+        const cube = new THREE.Mesh(geometry, material);
+        cube.position.set(Math.random() * 4 - 2, 0.5, Math.random() * 4 - 2);
+        scene.add(cube);
+      }
 
-    const container = document.getElementById("sampleContainer");
-    samples.forEach(sample => {
-      const card = document.createElement("div");
-      card.style.width = "200px";
-      card.style.textAlign = "center";
+      function addSphere() {
+        const geometry = new THREE.SphereGeometry(0.5, 32, 32);
+        const material = new THREE.MeshStandardMaterial({ color: Math.random() * 0xffffff });
+        const sphere = new THREE.Mesh(geometry, material);
+        sphere.position.set(Math.random() * 4 - 2, 0.5, Math.random() * 4 - 2);
+        scene.add(sphere);
+      }
 
-      const img = document.createElement("img");
-      img.src = "https://static.sketchfab.com/img/press/logos/sketchfab-logo.png";
-      img.style.width = "100%";
-      img.style.borderRadius = "8px";
+      function loadModel() {
+        const url = document.getElementById("modelUrl").value.trim();
+        if (!url) {
+          alert("請輸入模型 URL");
+          return;
+        }
+        const loader = new THREE.GLTFLoader();
+        loader.load(url, gltf => {
+          gltf.scene.position.set(0, 0, 0);
+          scene.add(gltf.scene);
+        }, undefined, err => {
+          console.error("載入模型失敗", err);
+          alert("載入模型失敗，請確認 URL 是否正確");
+        });
+      }
 
-      const p = document.createElement("p");
-      p.textContent = sample.name;
+      function resetCamera() {
+        camera.position.set(0, 2, 5);
+        controls.update();
+      }
 
-      const btn = document.createElement("button");
-      btn.textContent = "使用此模型";
-      btn.addEventListener("click", () => {
-        document.getElementById("modelUrl").value = sample.url;
-        loadModel();
+      document.getElementById("btnCube").addEventListener("click", addCube);
+      document.getElementById("btnSphere").addEventListener("click", addSphere);
+      document.getElementById("btnLoad").addEventListener("click", loadModel);
+      document.getElementById("btnReset").addEventListener("click", resetCamera);
+
+      const samples = [
+        { name: "模型範例 1", url: "https://example.com/model1.glb" },
+        { name: "模型範例 2", url: "https://example.com/model2.glb" },
+        { name: "模型範例 3", url: "https://example.com/model3.glb" }
+      ];
+
+      const container = document.getElementById("sampleContainer");
+      samples.forEach(sample => {
+        const card = document.createElement("div");
+        card.style.width = "200px";
+        card.style.textAlign = "center";
+
+        const img = document.createElement("img");
+        img.src = "https://static.sketchfab.com/img/press/logos/sketchfab-logo.png";
+        img.style.width = "100%";
+        img.style.borderRadius = "8px";
+
+        const p = document.createElement("p");
+        p.textContent = sample.name;
+
+        const btn = document.createElement("button");
+        btn.textContent = "使用此模型";
+        btn.addEventListener("click", () => {
+          document.getElementById("modelUrl").value = sample.url;
+          loadModel();
+        });
+
+        card.appendChild(img);
+        card.appendChild(p);
+        card.appendChild(btn);
+        container.appendChild(card);
       });
 
-      card.appendChild(img);
-      card.appendChild(p);
-      card.appendChild(btn);
-      container.appendChild(card);
-    });
+      function animate() {
+        requestAnimationFrame(animate);
+        if (keys['ArrowUp']) camera.position.z -= 0.1;
+        if (keys['ArrowDown']) camera.position.z += 0.1;
+        if (keys['ArrowLeft']) camera.position.x -= 0.1;
+        if (keys['ArrowRight']) camera.position.x += 0.1;
+        if (keys['q']) camera.position.y -= 0.1;
+        if (keys['e']) camera.position.y += 0.1;
+        renderer.render(scene, camera);
+      }
 
-    // 動畫更新
-    function animate() {
-      requestAnimationFrame(animate);
-      if (keys['ArrowUp']) camera.position.z -= 0.1;
-      if (keys['ArrowDown']) camera.position.z += 0.1;
-      if (keys['ArrowLeft']) camera.position.x -= 0.1;
-      if (keys['ArrowRight']) camera.position.x += 0.1;
-      if (keys['q']) camera.position.y -= 0.1;
-      if (keys['e']) camera.position.y += 0.1;
-      renderer.render(scene, camera);
-    }
-
-    animate();
+      animate();
+    };
   </script>
 </body>
 </html>
